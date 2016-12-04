@@ -16,7 +16,7 @@ public class PercolationStats {
         runExperiments(n, trials);
     }
 
-    void assertPositive(int n) {
+    private void assertPositive(int n) {
         if (n < 1) {
             throw new IllegalArgumentException("Number has to be larger than 1");
         }

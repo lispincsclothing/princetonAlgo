@@ -2,6 +2,7 @@
  * Created by student on 11/6/16.
  */
 
+import com.sun.xml.internal.bind.v2.TODO;
 import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
@@ -27,7 +28,7 @@ public class Percolation {
         backwash = new WeightedQuickUnionUF(numNodes);
         openSites = new boolean[numNodes];
         SIZE = rowSizeInt;
-        //Q: Why are TOP and BOTTOM index assigned thusly?
+        // TODO: 12/4/16 Why are TOP and BOTTOM index assigned thusly?
         TOP_INDEX = SIZE * SIZE;
         BOTTOM_INDEX = SIZE * SIZE + 1;
     }

@@ -2,14 +2,11 @@
  * Created by student on 11/6/16.
  */
 
-import com.sun.xml.internal.bind.v2.TODO;
-import edu.princeton.cs.algs4.MinPQ;
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-import edu.princeton.cs.algs4.StdOut;
 
 public class Percolation {
-    private WeightedQuickUnionUF union;
+    // TODO: 12/4/16 Why have both union and backwash?
+    private WeightedQuickUnionUF original;
     private WeightedQuickUnionUF backwash;
     private boolean[] openSites;
     private final int SIZE, TOP_INDEX, BOTTOM_INDEX;
@@ -24,11 +21,12 @@ public class Percolation {
         // grid stored in single array, squared, plus the top and bottom virtual sites
         int numNodes = rowSizeInt * rowSizeInt + 2;
 
-        union = new WeightedQuickUnionUF(numNodes);
+        original = new WeightedQuickUnionUF(numNodes);
         backwash = new WeightedQuickUnionUF(numNodes);
         openSites = new boolean[numNodes];
         SIZE = rowSizeInt;
-        // TODO: 12/4/16 Why are TOP and BOTTOM index assigned thusly?
+        // 12/4/16 Why are TOP and BOTTOM index assigned thusly?
+        // Answer: Just using unassigned indices (rather than artifically putting at 0 index, for example)
         TOP_INDEX = SIZE * SIZE;
         BOTTOM_INDEX = SIZE * SIZE + 1;
     }
@@ -38,7 +36,7 @@ public class Percolation {
         assertSiteInRange(row, column);
         openSites[toIndex(row, column)] = true;
         connectToVirtualTopNode(row, column);
-        connecToAdjacentNodes(row, column);
+        connectToAdjacentNodes(row, column);
         connectToVirtualBottomNode(row, column);
     }
 
@@ -60,11 +58,11 @@ public class Percolation {
     }
 
     private void union(int p, int q){
-        union.union(p, q);
+        original.union(p, q);
         backwash.union(p, q);
     }
 
-    private void connecToAdjacentNodes(int row, int column){
+    private void connectToAdjacentNodes(int row, int column){
         connectTopNode(row, column);
         connectBottomNode(row, column);
         connectLeftNode(row, column);
@@ -111,11 +109,12 @@ public class Percolation {
     public boolean isFull(int row, int column)  // is site (row, col) full?
     {
         assertSiteInRange(row, column);
-        return union.connected(toIndex(row, column), TOP_INDEX);
+        return original.connected(toIndex(row, column), TOP_INDEX);
     }
 
     public boolean percolates()              // does the system percolate?
     {
+        // TODO: 12/4/16 change to original.connected, goes into infinite loop - why? 
         return backwash.connected(BOTTOM_INDEX, TOP_INDEX);
     }
 

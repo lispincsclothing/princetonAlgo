@@ -1,4 +1,3 @@
-import edu.princeton.cs.algs4.Interval1D;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
